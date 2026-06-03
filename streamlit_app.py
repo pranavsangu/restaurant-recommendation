@@ -3,13 +3,20 @@
 from __future__ import annotations
 
 import os
+import sys
+from pathlib import Path
 from typing import Any
 
 import streamlit as st
 
-from zomato_ai.config import ConfigError, load_settings
-from zomato_ai.config.logging import configure_logging
-from zomato_ai.orchestration import RecommendationError, RecommendationService
+ROOT_DIR = Path(__file__).resolve().parent
+SRC_DIR = ROOT_DIR / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from zomato_ai.config import ConfigError, load_settings  # noqa: E402
+from zomato_ai.config.logging import configure_logging  # noqa: E402
+from zomato_ai.orchestration import RecommendationError, RecommendationService  # noqa: E402
 
 st.set_page_config(
     page_title="Zomato AI Recommendations",

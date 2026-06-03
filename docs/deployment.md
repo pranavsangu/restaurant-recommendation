@@ -71,6 +71,18 @@ Streamlit is included in `pyproject.toml`:
 "streamlit>=1.40.0"
 ```
 
+For Streamlit Cloud, deployment dependencies are also listed in:
+
+```text
+requirements.txt
+```
+
+The app pins the runtime with:
+
+```text
+runtime.txt
+```
+
 Keep FastAPI dependencies unless we decide to remove the FastAPI path later.
 
 ---
@@ -189,6 +201,8 @@ Implemented:
 
 ```text
 streamlit_app.py
+requirements.txt
+runtime.txt
 ```
 
 Optional later:
