@@ -13,10 +13,10 @@ def test_normalize_row_maps_common_zomato_columns() -> None:
         {
             "Restaurant ID": "abc-123",
             "Restaurant Name": "  The Test Kitchen ",
-            "City": "Bangalore",
+            "listed_in(city)": "Bangalore",
             "Locality": "Indiranagar",
             "Cuisines": "North Indian, Chinese / Cafe",
-            "Average Cost for two": "₹1,200",
+            "approx_cost(for two people)": "₹1,200",
             "Aggregate rating": "4.3/5",
         }
     )

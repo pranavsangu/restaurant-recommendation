@@ -48,6 +48,12 @@ GET http://127.0.0.1:8000/health
 POST http://127.0.0.1:8000/v1/recommendations
 ```
 
+Streamlit demo:
+
+```bash
+streamlit run streamlit_app.py
+```
+
 ## Test
 
 ```bash

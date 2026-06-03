@@ -25,6 +25,7 @@ NAME_ALIASES = (
 CITY_ALIASES = (
     "city",
     "location_city",
+    "listed_in(city)",
 )
 AREA_ALIASES = (
     "area",
@@ -39,6 +40,8 @@ CUISINE_ALIASES = (
 COST_ALIASES = (
     "average_cost_for_two",
     "average cost for two",
+    "approx_cost(for two people)",
+    "approx cost for two people",
     "cost_for_two",
     "cost for two",
     "cost",

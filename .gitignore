@@ -5,8 +5,8 @@ __pycache__/
 .ruff_cache/
 .mypy_cache/
 .env
+.streamlit/secrets.toml
 .cache/
 dist/
 build/
 *.egg-info/
-
