@@ -23,7 +23,7 @@ def test_normalize_row_maps_common_zomato_columns() -> None:
 
     assert record.id == "abc-123"
     assert record.name == "The Test Kitchen"
-    assert record.city == "Bangalore"
+    assert record.city is None
     assert record.area == "Indiranagar"
     assert record.cuisines == ["North Indian", "Chinese", "Cafe"]
     assert record.cost_for_two == 1200

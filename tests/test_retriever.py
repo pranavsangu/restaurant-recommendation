@@ -126,6 +126,29 @@ def test_retriever_returns_empty_no_match_result() -> None:
     assert result.filters_applied["location"] == "Delhi"
 
 
+def test_retriever_does_not_match_listing_bucket_as_location() -> None:
+    index = RestaurantIndex.build(
+        [
+            RestaurantRecord(
+                id="a",
+                name="Cross Listed",
+                city=None,
+                area="Jayanagar",
+                cuisines=["North Indian"],
+                cost_for_two=800,
+                budget_band="medium",
+                rating=4.2,
+                raw_attributes={"listed_in(city)": "Banashankari", "location": "Jayanagar"},
+            )
+        ]
+    )
+    retriever = CandidateRetriever(index, max_candidates=10)
+
+    result = retriever.retrieve(UserPreferences(location="Banashankari"))
+
+    assert result.candidates == []
+
+
 def test_index_deduplicates_by_id() -> None:
     index = RestaurantIndex.build(
         [
@@ -136,6 +159,18 @@ def test_index_deduplicates_by_id() -> None:
 
     assert len(index) == 1
     assert index.get("a").name == "First"
+
+
+def test_index_deduplicates_same_restaurant_rows_with_different_ids() -> None:
+    index = RestaurantIndex.build(
+        [
+            restaurant("a", "Same Place", area="BTM", cuisines=["Cafe"], cost_for_two=500),
+            restaurant("b", "Same Place", area="BTM", cuisines=["Cafe"], cost_for_two=500),
+        ]
+    )
+
+    assert len(index) == 1
+    assert index.get("a").name == "Same Place"
 
 
 def test_deterministic_rank_uses_same_ordering() -> None:

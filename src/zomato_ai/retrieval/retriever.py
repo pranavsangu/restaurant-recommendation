@@ -69,10 +69,12 @@ def _matches_location(record: RestaurantRecord, location: str | None) -> bool:
     haystacks = [
         record.city,
         record.area,
-        _raw_value(record, "listed_in(city)"),
         _raw_value(record, "location"),
     ]
-    return any(needle in _normalize_search_text(value) for value in haystacks if value)
+    normalized_haystacks = [_normalize_search_text(value) for value in haystacks if value]
+    if needle in normalized_haystacks:
+        return True
+    return any(needle in value for value in normalized_haystacks)
 
 
 def _matches_budget(record: RestaurantRecord, budget: str | None) -> bool:

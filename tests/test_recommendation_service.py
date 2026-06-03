@@ -122,6 +122,19 @@ def test_recommendation_service_builds_index_once() -> None:
     assert calls == 1
 
 
+def test_recommendation_service_returns_known_locations() -> None:
+    service = RecommendationService(
+        settings=load_settings({"MAX_CANDIDATES": "10", "TOP_K_OUTPUT": "1"}),
+        record_loader=lambda _settings: [
+            restaurant("a", "Alpha", area="Indiranagar"),
+            restaurant("b", "Bravo", area="Banashankari"),
+            restaurant("c", "Charlie", area=""),
+        ],
+    )
+
+    assert service.known_locations() == ["Banashankari", "Indiranagar"]
+
+
 class FakeLLMClient:
     def __init__(self, output: str) -> None:
         self.output = output

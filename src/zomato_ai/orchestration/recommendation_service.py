@@ -126,6 +126,17 @@ class RecommendationService:
             LOGGER.info("Built restaurant index records=%s", len(self._index))
         return self._index
 
+    def known_locations(self) -> list[str]:
+        """Return sorted known restaurant areas for UI selection."""
+
+        index = self._ensure_index()
+        locations = {
+            record.area.strip()
+            for record in index.records
+            if record.area is not None and record.area.strip()
+        }
+        return sorted(locations, key=str.lower)
+
     def _rank_candidates(
         self,
         *,

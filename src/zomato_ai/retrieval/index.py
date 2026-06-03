@@ -18,7 +18,12 @@ class RestaurantIndex:
     @classmethod
     def build(cls, records: Iterable[RestaurantRecord]) -> RestaurantIndex:
         deduped: dict[str, RestaurantRecord] = {}
+        seen_signatures: set[tuple[object, ...]] = set()
         for record in records:
+            signature = _dedupe_signature(record)
+            if signature in seen_signatures:
+                continue
+            seen_signatures.add(signature)
             deduped.setdefault(record.id, record)
         return cls(records=tuple(deduped.values()), by_id=deduped)
 
@@ -28,3 +33,11 @@ class RestaurantIndex:
     def __len__(self) -> int:
         return len(self.records)
 
+
+def _dedupe_signature(record: RestaurantRecord) -> tuple[object, ...]:
+    return (
+        record.name.strip().lower(),
+        (record.area or "").strip().lower(),
+        tuple(cuisine.strip().lower() for cuisine in record.cuisines),
+        record.cost_for_two,
+    )

@@ -25,7 +25,6 @@ NAME_ALIASES = (
 CITY_ALIASES = (
     "city",
     "location_city",
-    "listed_in(city)",
 )
 AREA_ALIASES = (
     "area",

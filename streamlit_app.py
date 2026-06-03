@@ -54,7 +54,13 @@ def main() -> None:
 
     with st.sidebar:
         st.header("Preferences")
-        location = st.text_input("Location", value="Banashankari")
+        location_options = service.known_locations()
+        default_location_index = _default_location_index(location_options, "Banashankari")
+        location = st.selectbox(
+            "Location",
+            options=location_options,
+            index=default_location_index,
+        )
         budget = st.selectbox("Budget", options=["Any", "low", "medium", "high"], index=0)
         cuisines = st.text_input("Cuisines", value="North Indian")
         min_rating = st.slider("Minimum rating", 0.0, 5.0, 4.0, 0.1)
@@ -152,6 +158,13 @@ def _split_csv(value: str) -> list[str]:
 def _clean_optional(value: str) -> str | None:
     cleaned = " ".join(value.strip().split())
     return cleaned or None
+
+
+def _default_location_index(options: list[str], default: str) -> int:
+    try:
+        return options.index(default)
+    except ValueError:
+        return 0
 
 
 if __name__ == "__main__":
